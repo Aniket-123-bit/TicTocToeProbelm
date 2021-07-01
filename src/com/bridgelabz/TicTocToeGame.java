@@ -1,5 +1,5 @@
 package com.bridgelabz;
-//UC2
+//UC3
 import java.util.Scanner;
 
 public class TicTocToeGame {
