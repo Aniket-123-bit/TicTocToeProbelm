@@ -1,55 +1,85 @@
+/**
+ * Ability for user to make a move to a desired location in the board
+ * Select the index from 1 to 9 to make the move.
+ * Ensure the index is free
+ *
+ * @author : ANIKET RAIKWAR
+ * @since : 03.07.2021
+ */
+
 package com.bridgelabz;
-//UC3
+import java.util.Arrays;
 import java.util.Scanner;
 
+
 public class TicTocToeGame {
-    static Scanner input = new Scanner(System.in);
-
-    public static void main(String[] args) {
-        System.out.println("Welcome to TicTocToe Game");
-        char[] board = new char[10];
-
-        System.out.println("Game initiated!");
-
-        // Display the initial board
-        for (int i = 0; i < board.length; i++) {
-            board[i] = '-';
+    public static void main(String[] args)
+    {
+        System.out.println("Welcome to Tic Tac Toe Game");
+        char[] board = createBoard();
+        char UserLetter = chooseLetter();
+        char ComputerLetter ;
+        if(UserLetter == 'X')
+        {
+            ComputerLetter = '0';
         }
-        showboard(board);
-
-        char inputChoice = chooseLetter();
-        char computer;
-        if (inputChoice == 'X')
-            computer='O';
         else
-            computer = 'X';
-
-        System.out.println("Player has chosen " + inputChoice+ "computer "+computer);
+        {
+            ComputerLetter = 'X';
+        }
+        System.out.println("Computer Letter is: " + ComputerLetter + " User Letter is :" + UserLetter);
+        showBoard(board);
+        int userMove = getUserMove(board);
+        showBoard(board);
+    }
+    public static int getUserMove(char[] board)
+    {
+        Scanner scan = new Scanner(System.in);
+        Integer[] validCells = {1,2,3,4,5,6,7,8,9};
+        while (true)
+        {
+            System.out.println("Next move ? (1-9)");
+            int index = scan.nextInt();
+            if (Arrays.asList(validCells).contains(index) && isSpaceFree(board, index))
+            {
+                System.out.println("Entered cell is valid cell and space is free");
+                return index;
+            }
+            System.out.println("Enter valid cell is between 1-9");
+        }
+    }
+    public static boolean isSpaceFree(char[] board , int index)
+    {
+        return board[index] == ' ';
+    }
+    public static char chooseLetter()
+    {
+        char alphabet;
+        Scanner UserInput = new Scanner(System.in);
+        System.out.println("Enter the Alphabet");
+        alphabet=UserInput.next().toUpperCase().charAt(0);
+        return alphabet;
 
     }
+    public static void showBoard(char[] board)
+    {
+        System.out.println("\n" + board [1] + "|" + board[2] + " | " + board[3]);
+        System.out.println("--------");
+        System.out.println(board [4] + "|" + board[5] + " | " + board[6]);
+        System.out.println("--------");
+        System.out.println(board [7] + "|" + board[8] + " | " + board[9]);
+        System.out.println("--------");
 
-    public static void showboard(char[] board) {
-        System.out.println("\n" + "Displaying the Tic Tac Toe Board");
-        System.out.println(board[0] + "  " + board[1] + "  " + board[2]);
-        System.out.println(board[3] + "  " + board[4] + "  " + board[5]);
-        System.out.println(board[6] + "  " + board[7] + "  " + board[8]);
     }
-
-    public static char chooseLetter() {
-        System.out.println("\n" + "Enter your choice: X | O");
-        char choice = input.next().charAt(0);
-
-        return choice;
+    public static char[] createBoard()
+    {
+        char[] board = new char[10];
+        for(int index =0; index < board.length; index++)
+        {
+            board[index] = ' ';
+        }
+        return board;
     }
-
-
 }
-
-
-
-
-
-
-
 
 
