@@ -1,7 +1,7 @@
 /**
- * Ability for user to make a move to a desired location in the board
- * Select the index from 1 to 9 to make the move.
- * Ensure the index is free
+ * Ability to check for the free space before making the desired move
+ * Extend UC4 to check if the free space is available for the move
+ * In case available make the move
  *
  * @author : ANIKET RAIKWAR
  * @since : 03.07.2021
@@ -29,21 +29,25 @@ public class TicTocToeGame {
         }
         System.out.println("Computer Letter is: " + ComputerLetter + " User Letter is :" + UserLetter);
         showBoard(board);
-        int userMove = getUserMove(board);
+        getUserMove(board,UserLetter);
         showBoard(board);
     }
-    public static int getUserMove(char[] board)
+
+    public static void getUserMove(char[] board,char alphabet)
     {
         Scanner scan = new Scanner(System.in);
         Integer[] validCells = {1,2,3,4,5,6,7,8,9};
-        while (true)
+
+        Boolean occupied = false;
+        while (occupied == false)
         {
             System.out.println("Next move ? (1-9)");
             int index = scan.nextInt();
             if (Arrays.asList(validCells).contains(index) && isSpaceFree(board, index))
             {
                 System.out.println("Entered cell is valid cell and space is free");
-                return index;
+                board[index] = alphabet;
+                occupied = true;
             }
             System.out.println("Enter valid cell is between 1-9");
         }
