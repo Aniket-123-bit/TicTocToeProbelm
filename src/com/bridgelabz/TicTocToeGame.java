@@ -1,9 +1,14 @@
 /**
- * Toss to check who plays first.
- * Use Random to determine who starts first, the computer or the user
+ * Determine after every move the winner or the tie or change the turn
+ * On Computer getting its turn would like the computer to play like me
+ * Next thing I do is check if my Opponent can win then play to block it
+ * If neither of us are winning then My first choice would be to take one of the available corners
+ * If the corners are not available then take the Centre
+ * Lastly any of the available sides
+ * Play till the game is full or th player wins
  *
  * @author : ANIKET RAIKWAR
- * @since : 03.07.2021
+ * @since : 04.07.2021
  */
 
 package com.bridgelabz;
@@ -31,6 +36,8 @@ public class TicTocToeGame {
         getUserMove(board,UserLetter);
         showBoard(board);
         toss();
+        char win =winnerCheck(board);
+        System.out.println("Winner is " + win);
     }
     public static void toss()
     {
@@ -98,4 +105,61 @@ public class TicTocToeGame {
         }
         return board;
     }
+    public static char winnerCheck(char[] board)
+    {
+        for( int i = 1; i < 3; i++ )
+        {
+            for(int j = 1;j <= i; j = j+3)
+            {
+                if( ( board[j] == 'X') && ( board[i+j] == 'X') && ( board[i+j+1] == 'X' ) )
+                {
+                    return 'X';
+                }
+                if( ( board[j] == 'O' ) && ( board[i+j] == 'O' ) && ( board[i+j+1] == 'O' ) )
+                {
+                    return 'O';
+                }
+            }
+        }
+        for( int i = 1; i < 3; i++ )
+        {
+            for(int j = 1;j <= i; j++)
+            {
+                if( ( board[j] == 'X' ) && ( board[j+i+2] == 'X' ) && ( board[j+i+5] == 'X' ) )
+                {
+                    return 'X';
+                }
+
+                if( ( board[j] == 'O' ) && ( board[j+i+2] == 'O' ) && ( board[j+i+5] == 'O' ) )
+                {
+                    return 'O';
+                }
+            }
+        }
+        // For Diagonal
+
+        if( ( board[1] == 'X' ) &&  ( board[5] == 'X' ) &&  ( board[9] == 'X' ) )
+            return 'X';
+        if( ( board[3] == 'X' ) &&  ( board[5] == 'X' ) &&  ( board[7] == 'X' ) )
+            return 'X';
+        if( ( board[1] == 'O' ) &&  ( board[5] == 'O' ) &&  ( board[9] == 'O' ) )
+            return 'O';
+        if( ( board[3] == 'O' ) &&  ( board[5] == 'O' ) &&  ( board[7] == 'O' ) )
+            return 'O';
+
+        for( int i = 1; i < board.length; i++ )
+        {
+            int  cell=0;
+            if(board[i]!=' ')
+            {
+                cell++;
+            }
+            if(cell==9)
+            {
+                System.out.println("Match is tie");
+            }
+        }
+        return 0;
+    }
+
 }
